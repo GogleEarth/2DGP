@@ -99,15 +99,15 @@ def update(frame_time,fisher,fish,float):
     if fishing_state:
         time_limit += 1 / (frame_time * 60)
         print("Time_limit : ", 60 - time_limit)
-        print("red y : ", red.y, " yellow y- :", fisher.fisher_y - 32 * (4-fish.fish_level), " yellow y+ : ", fisher.fisher_y + 32 * (4-fish.fish_level))
-    if time_limit >= 60:
-        if red.y >= fisher.fisher_y - 32 * (4-fish.fish_level) and red.y <= fisher.fisher_y + 32 * (4-fish.fish_level):
+        print("red y : ", red.y, " yellow y- :", fisher.fisher_y - 16 * (4-fish.fish_level), " yellow y+ : ", fisher.fisher_y + 16 * (4-fish.fish_level))
+    if time_limit >= 45:
+        if red.y >= fisher.fisher_y - 16 * (4-fish.fish_level) and red.y <= fisher.fisher_y + 16 * (4-fish.fish_level):
             print("fishing success")
             fishing_state = False
             if fish.fish_id != 3:
                 fisher.fisher_str += fish.fish_level
                 fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
-                fisher.fisher_hungry -= fish.fish_size / 2
+                fisher.fisher_hungry -= 5
                 print("HEAL : ",fish.fish_heal)
             fisher.state = fisher.FINISH
             float.state = float.NONE

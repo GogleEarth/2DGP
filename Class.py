@@ -31,7 +31,7 @@ class FISH:
         self.fish_id = random.randint(0,3)
         self.fish_level = random.randint(1,3)
         self.fish_size = random.randint(30,100)
-        self.fish_heal = self.fish_size * 5
+        self.fish_heal = self.fish_size * 2
         self.fish_state = self.UN_DROW
         self.fish_y = 20
         if(FISH.image == None):
@@ -261,19 +261,19 @@ class SHIP:
     def handle_event(self, fisher, event):
         if event.type == SDL_KEYDOWN:
             if fisher.state == fisher.STANDING:
-                if event.key == SDLK_RIGHT:
+                if event.key == SDLK_d:
                     self.state_hor = self.RIGHT_RUN
                     self.state_vir = self.NONE_STATE
                     self.state_acc = self.ACC
-                elif event.key == SDLK_LEFT:
+                elif event.key == SDLK_a:
                     self.state_hor = self.LEFT_RUN
                     self.state_vir = self.NONE_STATE
                     self.state_acc = self.ACC
-                elif event.key == SDLK_UP:
+                elif event.key == SDLK_w:
                     self.state_vir = self.UP_RUN
                     self.state_hor = self.NONE_STATE
                     self.state_acc = self.ACC
-                elif event.key == SDLK_DOWN:
+                elif event.key == SDLK_s:
                     self.state_vir = self.DOWN_RUN
                     self.state_hor = self.NONE_STATE
                     self.state_acc = self.ACC
