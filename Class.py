@@ -53,11 +53,11 @@ class FISH:
         pass
 
     def draw(self, fisher):
-        self.image.clip_draw((self.fish_level-1) * 64,0,64,64,fisher.fisher_x,fisher.fisher_y + self.fish_y, 64, 64)
+        self.image.clip_draw(self.fish_id * 64,0,64,64,fisher.fisher_x,fisher.fisher_y + self.fish_y)
         pass
 
     def reset(self):
-        self.fish_id = random.randint(0, 2)
+        self.fish_id = random.randint(0,3)
         self.fish_level = random.randint(1, 3)
         self.fish_size = random.randint(30, 100)
         self.fish_heal = self.fish_size * 5
