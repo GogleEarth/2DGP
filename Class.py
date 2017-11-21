@@ -28,7 +28,7 @@ class FISH:
     image = None
     UN_DROW, DRAW = 0, 1
     def __init__(self):
-        self.fish_id = random.randint(0,2)
+        self.fish_id = random.randint(0,3)
         self.fish_level = random.randint(1,3)
         self.fish_size = random.randint(30,100)
         self.fish_heal = self.fish_size * 5

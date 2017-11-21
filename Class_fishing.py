@@ -25,7 +25,7 @@ class Yellow_Zone:
         self.image = load_image("resource/Hungry.png")
 
     def draw(self):
-        self.image.clip_draw(0,0,64,64,main_state.fisher.fisher_x-80,main_state.fisher.fisher_y,32,main_state.fish.fish_level * 32)
+        self.image.clip_draw(0,0,64,64,main_state.fisher.fisher_x-80,main_state.fisher.fisher_y,32,(4 - main_state.fish.fish_level) * 32)
 
 
 class Red_Line:
@@ -99,14 +99,15 @@ def update(frame_time,fisher,fish,float):
     if fishing_state:
         time_limit += 1 / (frame_time * 60)
         print("Time_limit : ", 60 - time_limit)
-
+        print("red y : ", red.y, " yellow y- :", fisher.fisher_y - 32 * (4-fish.fish_level), " yellow y+ : ", fisher.fisher_y + 32 * (4-fish.fish_level))
     if time_limit >= 60:
-        if red.y >= fisher.fisher_y - 32 * (3-fish.fish_level) and red.y <= fisher.fisher_y + 32 * (3-fish.fish_level):
+        if red.y >= fisher.fisher_y - 32 * (4-fish.fish_level) and red.y <= fisher.fisher_y + 32 * (4-fish.fish_level):
             print("fishing success")
             fishing_state = False
-            fisher.fisher_str += fish.fish_level
-            fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
-            print("HEAL : ",fish.fish_heal)
+            if fish.fish_level != 3:
+                fisher.fisher_str += fish.fish_level
+                fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
+                print("HEAL : ",fish.fish_heal)
             fisher.state = fisher.FINISH
             float.state = float.NONE
             fish.fish_state = fish.DRAW
