@@ -1,17 +1,16 @@
 import game_framework
-import main_state
-
+import title_state
 from pico2d import *
 
 
-name = "TitleState"
+name = "Gameover_State"
 image = None
 bgm = None
 
 def enter():
     global  image, bgm
-    image = load_image('resource/title.png')
-    bgm = load_music('resource/title_bgm.mp3')
+    image = load_image('resource/gameover.png')
+    bgm = load_music('resource/gameover_bgm.mp3')
     bgm.set_volume(64)
     bgm.repeat_play()
 
@@ -26,11 +25,9 @@ def handle_events():
     for event in events:
         if event.type == SDL_QUIT:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-            game_framework.quit()
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
-                game_framework.change_state(main_state)
+                game_framework.change_state(title_state)
 
 
 def draw():
@@ -49,9 +46,6 @@ def pause():
 
 def resume():
     pass
-
-
-
 
 
 

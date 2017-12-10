@@ -10,7 +10,7 @@ import Class
 from pico2d import *
 
 import game_framework
-import title_state
+import gameover_state
 import FishingUI_Class
 
 running = None
@@ -96,7 +96,7 @@ def update():
     ui.upadte(fisher)
     fish.update(fisher, float)
     if fisher.fisher_hunger <= 0:
-        game_framework.change_state(title_state)
+        game_framework.change_state(gameover_state)
     if fisher.state == fisher.FIGHTING:
         FishingUI_Class.update(frame_time, fisher, fish, float)
         pass

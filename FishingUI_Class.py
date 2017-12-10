@@ -13,7 +13,7 @@ class White_Zone:
         self.image = load_image("resource/white_zone.png")
 
     def draw(self,fisher,fish):
-        self.image.clip_draw(0,0,64,64,fisher.fisher_x-80,fisher.fisher_y,32,194)
+        self.image.clip_draw(0,0,32,32,fisher.fisher_x-80,fisher.fisher_y,32,194)
 
 class Yellow_Zone:
 
@@ -21,7 +21,7 @@ class Yellow_Zone:
         self.image = load_image("resource/Hungry.png")
 
     def draw(self,fisher,fish):
-        self.image.clip_draw(0,0,64,64,fisher.fisher_x-80,fisher.fisher_y,32,(4 - fish.fish_level) * 32)
+        self.image.clip_draw(0,0,32,32,fisher.fisher_x-80,fisher.fisher_y,32,(4 - fish.fish_level) * 32)
 
 
 class Red_Line:
@@ -32,7 +32,7 @@ class Red_Line:
         self.y = fisher.fisher_y - 80
 
     def draw(self):
-        self.image.clip_draw(0,0,64,64,self.x,self.y,32,32)
+        self.image.clip_draw(0,0,32,32,self.x,self.y,)
 
     def update(self,fisher,fish):
         global key_down
