@@ -1,6 +1,6 @@
 from pico2d import *
 import random
-import Class_fishing
+import FishingUI_Class
 
 class FISHER:
     PIXEL_PER_METER = (10.0 / 30) #10픽셀당 30cm
@@ -78,12 +78,12 @@ class FISHER:
                 if self.state == self.STANDING:
                     self.state = self.READY
                     float.state = float.READY
-                    Class_fishing.init(fisher,fish)
+                    FishingUI_Class.init(fisher, fish)
                 if self.state == self.FISHING:
                     self.state = self.FINISH
                     float.float_y = self.fisher_y
                     float.float_x = self.fisher_x
                     float.state = float.NONE
-                    Class_fishing.init(fisher,fish)
+                    FishingUI_Class.init(fisher, fish)
 
                 pass

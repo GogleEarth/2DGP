@@ -11,7 +11,7 @@ from pico2d import *
 
 import game_framework
 import title_state
-import Class_fishing
+import FishingUI_Class
 
 running = None
 ship = None
@@ -72,7 +72,7 @@ def handle_events():
         else:
             ship.handle_event(fisher, event)
             fisher.handle_event(fisher, fish, ship, float, event)
-            Class_fishing.handle_events(event)
+            FishingUI_Class.handle_events(event)
 
 
 
@@ -98,7 +98,7 @@ def update():
     if fisher.fisher_hunger <= 0:
         game_framework.change_state(title_state)
     if fisher.state == fisher.FIGHTING:
-        Class_fishing.update(frame_time,fisher,fish,float)
+        FishingUI_Class.update(frame_time, fisher, fish, float)
         pass
 
 def draw():
@@ -123,7 +123,7 @@ def draw():
         obj.draw()
     ui.draw()
     if fisher.state == fisher.FIGHTING:
-        Class_fishing.draw(fisher, fish)
+        FishingUI_Class.draw(fisher, fish)
     print(fish.fish_state)
     if(fish.fish_state == fish.DRAW):
         fish.draw(fisher)
