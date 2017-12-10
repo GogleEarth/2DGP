@@ -1,5 +1,3 @@
-import main_state
-
 from pico2d import *
 
 white = None
@@ -14,24 +12,24 @@ class White_Zone:
     def __init__(self):
         self.image = load_image("resource/white_zone.png")
 
-    def draw(self):
-        self.image.clip_draw(0,0,64,64,main_state.fisher.fisher_x-80,main_state.fisher.fisher_y,32,194)
+    def draw(self,fisher,fish):
+        self.image.clip_draw(0,0,64,64,fisher.fisher_x-80,fisher.fisher_y,32,194)
 
 class Yellow_Zone:
 
     def __init__(self):
         self.image = load_image("resource/Hungry.png")
 
-    def draw(self):
-        self.image.clip_draw(0,0,64,64,main_state.fisher.fisher_x-80,main_state.fisher.fisher_y,32,(4 - main_state.fish.fish_level) * 32)
+    def draw(self,fisher,fish):
+        self.image.clip_draw(0,0,64,64,fisher.fisher_x-80,fisher.fisher_y,32,(4 - fish.fish_level) * 32)
 
 
 class Red_Line:
 
-    def __init__(self):
+    def __init__(self,fisher):
         self.image = load_image("resource/red_line.png")
-        self.x = main_state.fisher.fisher_x - 80
-        self.y = main_state.fisher.fisher_y - 80
+        self.x = fisher.fisher_x - 80
+        self.y = fisher.fisher_y - 80
 
     def draw(self):
         self.image.clip_draw(0,0,64,64,self.x,self.y,32,32)
@@ -41,7 +39,7 @@ class Red_Line:
         self.y = max(fisher.fisher_y - 95, self.y - (fish.fish_level + fish.fish_level)*1.5)
         if key_down == True:
             self.y = min(self.y + 5 + fisher.fisher_str, fisher.fisher_y + 95)
-def init():
+def init(fisher,fish):
     global white
     global yellow
     global red
@@ -61,10 +59,10 @@ def init():
         del(white)
         white = White_Zone()
     if red == None:
-        red = Red_Line()
+        red = Red_Line(fisher)
     else:
         del(red)
-        red = Red_Line()
+        red = Red_Line(fisher)
 
     pass
 
@@ -120,11 +118,11 @@ def update(frame_time,fisher,fish,float):
 
     pass
 
-def draw():
+def draw(fisher, fish):
     global white
     global yellow
     global red
 
-    white.draw()
-    yellow.draw()
+    white.draw(fisher, fish)
+    yellow.draw(fisher, fish)
     red.draw()

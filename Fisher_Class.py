@@ -50,7 +50,7 @@ class FISHER:
         self.image.clip_draw(self.fisher_frame * 64, self.dirrection * 64, 64, 64, self.fisher_x, self.fisher_y)
         pass
 
-    def handle_event(self, ship, float, event):
+    def handle_event(self,fisher, fish, ship, float, event):
         if event.type == SDL_MOUSEMOTION:
             print("Mouse position : ", event.x, "  ", 600 - event.y)
             if self.state == self.STANDING:
@@ -74,16 +74,16 @@ class FISHER:
                         float.float_des_y = 600 - event.y
 
         elif event.type == SDL_MOUSEBUTTONDOWN:
-            if ship.state_hor == ship.NONE_STATE and ship.state_vir == ship.NONE_STATE:
+            if ship.state_horizon == ship.NONE_STATE and ship.state_virtical == ship.NONE_STATE:
                 if self.state == self.STANDING:
                     self.state = self.READY
                     float.state = float.READY
-                    Class_fishing.init()
+                    Class_fishing.init(fisher,fish)
                 if self.state == self.FISHING:
                     self.state = self.FINISH
                     float.float_y = self.fisher_y
                     float.float_x = self.fisher_x
                     float.state = float.NONE
-                    Class_fishing.init()
+                    Class_fishing.init(fisher,fish)
 
                 pass

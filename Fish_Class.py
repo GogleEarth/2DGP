@@ -15,16 +15,17 @@ class FISH:
             FISH.image = load_image("resource/fishes.png")
 
     def update(self, fisher, float):
-        i = random.randint(0,1000)
-        print("random : ", i, "fish_level : ",(4 - self.fish_level) * 5 + fisher.fisher_luck)
-        if i <= (4 - self.fish_level) * 5 + fisher.fisher_luck:
-            float.state = float.FISING
-            print("fishing start")
-            fisher.state = fisher.FIGHTING
-            self.reset()
-            self.fish_state = self.UN_DROW
+        if float.state == float.READY:
+            i = random.randint(0,100)
+            print("random : ", i, "fish_level : ", self.fish_level)
+            if i == 4 - self.fish_level:
+                float.state = float.FISING
+                print("fishing start")
+                fisher.state = fisher.FIGHTING
+                self.reset()
+                self.fish_state = self.UN_DROW
         if self.fish_state == self.DRAW:
-            self.fish_y += 1
+            self.fish_y = self.fish_y + 1
             if self.fish_y >= 30:
                 self.fish_state = self.UN_DROW
         pass

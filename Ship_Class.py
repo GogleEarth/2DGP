@@ -17,8 +17,8 @@ class SHIP:
         self.ship_x = 400
         self.ship_y = 200
         self.ship_frame = 0
-        self.ship_acc = 1 # 가속도 1p/s
-        self.ship_max_acc = 100 #최대 가속도 100p/s
+        self.ship_accelate = 1 # 가속도 1p/s
+        self.ship_max_accelate = 100 #최대 가속도 100p/s
         self.direction_horizon = 0
         self.direction_virtical = 0
         self.state_horizon = self.NONE_STATE
@@ -28,7 +28,7 @@ class SHIP:
             SHIP.image = load_image("resource/ship.png")
 
     def update(self, frame_time):
-        distance = (self.SHIP_SPEED_PPS + self.ship_acc) * frame_time
+        distance = (self.SHIP_SPEED_PPS + self.ship_accelate) * frame_time
 
         if self.state_horizon == self.RIGHT_RUN:
             self.direction_horizon = 1
@@ -44,18 +44,18 @@ class SHIP:
         if self.state_virtical != self.NONE_STATE:
             self.ship_y += (self.direction_virtical * distance)
 
-        if self.ship_acc <= self.ship_max_acc:
-            self.ship_acc = max(0, self.ship_acc + self.state_accelate)
+        if self.ship_accelate <= self.ship_max_accelate:
+            self.ship_accelate = max(0, self.ship_accelate + self.state_accelate)
         else:
-            self.ship_acc = self.ship_max_acc - 1
+            self.ship_accelate = self.ship_max_accelate - 1
 
-        if self.ship_acc == 0:
+        if self.ship_accelate == 0:
             if self.state_virtical != self.NONE_STATE:
                 self.state_virtical = self.NONE_STATE
             elif self.state_horizon != self.NONE_STATE:
                 self.state_horizon = self.NONE_STATE
 
-        print(self.ship_acc)
+        print(self.ship_accelate)
 
     def draw(self):
         if self.state_virtical != self.NONE_STATE:

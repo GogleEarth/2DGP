@@ -1,6 +1,4 @@
 from pico2d import *
-import random
-import Class_fishing
 
 class UI:
     image = None
@@ -32,14 +30,3 @@ class BACKGROUND:
         self.image.draw(400, 700, 800,1600)
         pass
 
-
-current_time = 0.0
-
-
-def get_frame_time():
-
-    global current_time
-
-    frame_time = get_time() - current_time
-    current_time += frame_time
-    return frame_time

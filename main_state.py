@@ -71,7 +71,7 @@ def handle_events():
             game_framework.quit()
         else:
             ship.handle_event(fisher, event)
-            fisher.handle_event(ship, float, event)
+            fisher.handle_event(fisher, fish, ship, float, event)
             Class_fishing.handle_events(event)
 
 
@@ -87,15 +87,14 @@ def update():
     global Objects
     global ui
 
-    frame_time = Class.get_frame_time()
+    frame_time = get_frame_time()
     handle_events()
 
     ship.update(frame_time)
     fisher.update(ship, frame_time)
     float.update(fisher, frame_time)
     ui.upadte(fisher)
-    if float.state == float.READY:
-        fish.update(fisher, float)
+    fish.update(fisher, float)
     if fisher.fisher_hunger <= 0:
         game_framework.change_state(title_state)
     if fisher.state == fisher.FIGHTING:
@@ -124,10 +123,19 @@ def draw():
         obj.draw()
     ui.draw()
     if fisher.state == fisher.FIGHTING:
-        Class_fishing.draw()
+        Class_fishing.draw(fisher, fish)
     print(fish.fish_state)
     if(fish.fish_state == fish.DRAW):
         fish.draw(fisher)
 
     delay(0.03)
     update_canvas()
+
+
+def get_frame_time():
+
+    global current_time
+
+    frame_time = get_time() - current_time
+    current_time += frame_time
+    return frame_time
