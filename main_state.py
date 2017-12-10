@@ -13,12 +13,10 @@ import game_framework
 import gameover_state
 import FishingUI_Class
 
-running = None
 ship = None
 fisher = None
 float = None
 fish = None
-current_time = None
 bg = None
 Objects = None
 ui = None
@@ -27,8 +25,6 @@ name = "MainState"
 
 def enter():
     global ship
-    global running
-    global current_time
     global fisher
     global float
     global fish
@@ -36,16 +32,18 @@ def enter():
     global Objects
     global ui
 
-    running = True
-    current_time = get_time()
 
     ui = Class.UI()
-    bg = Class.BACKGROUND()
+    bg = Class.FixedTileBackground()
     Objects = [Object_Class.OBJECT() for i in range(10)]
     ship = Ship_Class.SHIP()
     fisher = Fisher_Class.FISHER()
     float = Float_Class.FLOAT()
     fish = Fish_Class.FISH()
+
+    bg.set_center_object(ship)
+    ship.set_background(bg)
+    fisher.set_background(bg)
 
     pass
 
@@ -60,7 +58,7 @@ def resume():
     pass
 
 
-def handle_events():
+def handle_events(frame_time):
     global ship
     global fisher
     events = get_events()
@@ -71,44 +69,39 @@ def handle_events():
             game_framework.quit()
         else:
             ship.handle_event(fisher, event)
-            fisher.handle_event(fisher, fish, ship, float, event)
+            fisher.handle_event(fisher, fish, ship, float, bg, event)
             FishingUI_Class.handle_events(event)
 
 
 
-def update():
+def update(frame_time):
     global ship
-    global running
-    global current_time
     global fisher
     global float
     global fish
-    global bg
     global Objects
     global ui
 
-    frame_time = get_frame_time()
-    handle_events()
+    handle_events(frame_time)
 
+    bg.update(frame_time)
     ship.update(frame_time)
     fisher.update(ship, frame_time)
     float.update(fisher, frame_time)
     ui.upadte(fisher)
     fish.update(fisher, float)
+
     if fisher.fisher_hunger <= 0:
         game_framework.change_state(gameover_state)
     if fisher.state == fisher.FIGHTING:
         FishingUI_Class.update(frame_time, fisher, fish, float)
         pass
 
-def draw():
+def draw(frame_time):
     global ship
-    global running
-    global current_time
     global fisher
     global float
     global fish
-    global bg
     global Objects
     global ui
 
@@ -131,11 +124,3 @@ def draw():
     delay(0.03)
     update_canvas()
 
-
-def get_frame_time():
-
-    global current_time
-
-    frame_time = get_time() - current_time
-    current_time += frame_time
-    return frame_time

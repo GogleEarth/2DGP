@@ -13,33 +13,41 @@ class White_Zone:
         self.image = load_image("resource/white_zone.png")
 
     def draw(self,fisher,fish):
-        self.image.clip_draw(0,0,32,32,fisher.fisher_x-80,fisher.fisher_y,32,194)
+        self.image.clip_draw(0,0,32,32,fisher.fisher_x-40-self.bg.window_left,fisher.fisher_y-self.bg.window_bottom,32,194)
 
+    def set_background(self, bg):
+        self.bg = bg
 class Yellow_Zone:
 
     def __init__(self):
         self.image = load_image("resource/Hungry.png")
 
     def draw(self,fisher,fish):
-        self.image.clip_draw(0,0,32,32,fisher.fisher_x-80,fisher.fisher_y,32,(4 - fish.fish_level) * 32)
+        self.image.clip_draw(0,0,32,32,fisher.fisher_x-40-self.bg.window_left,fisher.fisher_y-self.bg.window_bottom,32,(4 - fish.fish_level) * 32)
 
+    def set_background(self, bg):
+        self.bg = bg
 
 class Red_Line:
 
     def __init__(self,fisher):
         self.image = load_image("resource/red_line.png")
-        self.x = fisher.fisher_x - 80
-        self.y = fisher.fisher_y - 80
+        self.x = fisher.fisher_x
+        self.y = fisher.fisher_y
 
     def draw(self):
-        self.image.clip_draw(0,0,32,32,self.x,self.y,)
+        self.image.clip_draw(0,0,32,32,self.x-40-self.bg.window_left,self.y-self.bg.window_bottom)
 
     def update(self,fisher,fish):
         global key_down
         self.y = max(fisher.fisher_y - 95, self.y - (fish.fish_level + fish.fish_level)*1.5)
         if key_down == True:
             self.y = min(self.y + 5 + fisher.fisher_str, fisher.fisher_y + 95)
-def init(fisher,fish):
+
+    def set_background(self, bg):
+        self.bg = bg
+
+def init(fisher,fish,bg):
     global white
     global yellow
     global red
@@ -50,19 +58,26 @@ def init(fisher,fish):
     fishing_state = True
     if yellow == None:
         yellow = Yellow_Zone()
+        yellow.set_background(bg)
     else:
         del(yellow)
         yellow = Yellow_Zone()
+        yellow.set_background(bg)
     if white == None:
         white = White_Zone()
+        white.set_background(bg)
     else:
         del(white)
         white = White_Zone()
+        white.set_background(bg)
     if red == None:
         red = Red_Line(fisher)
+        red.set_background(bg)
     else:
         del(red)
         red = Red_Line(fisher)
+        red.set_background(bg)
+
 
     pass
 

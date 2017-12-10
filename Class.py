@@ -1,5 +1,9 @@
 from pico2d import *
 
+import random
+
+from Tilemap import load_tile_map
+
 class UI:
     image = None
 
@@ -21,15 +25,33 @@ class UI:
         self.image.clip_draw(0,0,64,64,0,550,self.guage * 1.5,10)
 
 
-class BACKGROUND:
+
+class FixedTileBackground:
+
     def __init__(self):
-        self.image = load_image('resource/Background.png')
+        self.tile_map = load_tile_map('resource/Sea_tilemap.json')
+        self.max_id = self.tile_map.max_id
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
+        self.w = self.tile_map.width * self.tile_map.tilewidth
+        self.h = self.tile_map.height * self.tile_map.tileheight
         self.bgm = load_music('resource/game_bgm.mp3')
         self.bgm.set_volume(64)
         self.bgm.repeat_play()
-        pass
+
+
+    def set_center_object(self, ship):
+        self.center_object = ship
+        self.max_window_left = self.w - self.canvas_width
+        self.max_window_bottom = self.h - self.canvas_height
 
     def draw(self):
-        self.image.draw(400, 700, 800,1600)
+        self.tile_map.clip_draw_to_origin(self.window_left, self.window_bottom, self.canvas_width, self.canvas_height, 0, 0)
         pass
+
+    def update(self, frame_time):
+        self.window_left = clamp(0, int(self.center_object.ship_x) - self.canvas_width//2, self.max_window_left)
+        self.window_bottom = clamp(0, int(self.center_object.ship_y) - self.canvas_height//2, self.max_window_bottom)
+
+
 

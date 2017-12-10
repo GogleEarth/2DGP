@@ -1,0 +1,12 @@
+{ "columns":1,
+ "image":"resource/tileset.png",
+ "imageheight":88,
+ "imagewidth":91,
+ "margin":0,
+ "name":"Sea_tileset",
+ "spacing":0,
+ "tilecount":1,
+ "tileheight":64,
+ "tilewidth":64,
+ "type":"tileset"
+}

@@ -14,11 +14,13 @@ class SHIP:
     image = None
 
     def __init__(self):
-        self.ship_x = 400
-        self.ship_y = 200
+        self.ship_x = 0
+        self.ship_y = 0
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
         self.ship_frame = 0
         self.ship_accelate = 1 # 가속도 1p/s
-        self.ship_max_accelate = 100 #최대 가속도 100p/s
+        self.ship_max_accelate = 200 #최대 가속도 100p/s
         self.direction_horizon = 0
         self.direction_virtical = 0
         self.state_horizon = self.NONE_STATE
@@ -44,6 +46,9 @@ class SHIP:
         if self.state_virtical != self.NONE_STATE:
             self.ship_y += (self.direction_virtical * distance)
 
+        self.x = clamp(0, self.x, self.bg.w)
+        self.y = clamp(0, self.y, self.bg.h)
+
         if self.ship_accelate <= self.ship_max_accelate:
             self.ship_accelate = max(0, self.ship_accelate + self.state_accelate)
         else:
@@ -59,11 +64,17 @@ class SHIP:
 
     def draw(self):
         if self.state_virtical != self.NONE_STATE:
-            self.image.clip_draw(0, (self.state_virtical - 1) * 64, 64, 64, self.ship_x, self.ship_y)
+            self.image.clip_draw(0, (self.state_virtical - 1) * 64, 64, 64, self.ship_x - self.bg.window_left, self.ship_y - self.bg.window_bottom)
         elif self.state_horizon != self.NONE_STATE:
-            self.image.clip_draw(0, (self.state_horizon - 1) * 64, 64, 64, self.ship_x, self.ship_y)
+            self.image.clip_draw(0, (self.state_horizon - 1) * 64, 64, 64, self.ship_x - self.bg.window_left, self.ship_y - self.bg.window_bottom)
         else:
-            self.image.clip_draw(0, 0, 64, 64, self.ship_x, self.ship_y)
+            self.image.clip_draw(0, 0, 64, 64, self.ship_x - self.bg.window_left, self.ship_y - self.bg.window_bottom)
+
+
+    def set_background(self, bg):
+        self.bg = bg
+        self.x = self.bg.w / 2
+        self.y = self.bg.h / 2
 
     def handle_event(self, fisher, event):
         if event.type == SDL_KEYDOWN:

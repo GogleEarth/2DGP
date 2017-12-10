@@ -14,8 +14,10 @@ class FISHER:
     image = None
 
     def __init__(self):
-        self.fisher_x = 400
-        self.fisher_y = 220
+        self.fisher_x = 0
+        self.fisher_y = 00
+        self.canvas_width = get_canvas_width()
+        self.canvas_height = get_canvas_height()
         self.fisher_frame = 0
         self.total_frames = 0.0
         self.fisher_hunger = 1000
@@ -47,10 +49,15 @@ class FISHER:
 
 
     def draw(self):
-        self.image.clip_draw(self.fisher_frame * 64, self.dirrection * 64, 64, 64, self.fisher_x, self.fisher_y)
+        self.image.clip_draw(self.fisher_frame * 64, self.dirrection * 64, 64, 64, self.fisher_x - self.bg.window_left, self.fisher_y - self.bg.window_bottom)
         pass
 
-    def handle_event(self,fisher, fish, ship, float, event):
+    def set_background(self, bg):
+        self.bg = bg
+        self.x = self.bg.w / 2
+        self.y = self.bg.h / 2
+
+    def handle_event(self,fisher, fish, ship, float, bg, event):
         if event.type == SDL_MOUSEMOTION:
             print("Mouse position : ", event.x, "  ", 600 - event.y)
             if self.state == self.STANDING:
@@ -78,12 +85,12 @@ class FISHER:
                 if self.state == self.STANDING:
                     self.state = self.READY
                     float.state = float.READY
-                    FishingUI_Class.init(fisher, fish)
+                    FishingUI_Class.init(fisher, fish,bg)
                 if self.state == self.FISHING:
                     self.state = self.FINISH
                     float.float_y = self.fisher_y
                     float.float_x = self.fisher_x
                     float.state = float.NONE
-                    FishingUI_Class.init(fisher, fish)
+                    FishingUI_Class.init(fisher, fish,bg)
 
                 pass
