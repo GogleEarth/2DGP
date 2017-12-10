@@ -1,8 +1,12 @@
 import random
 import json
 import os
+import Fisher_Class
+import Float_Class
+import Ship_Class
+import Object_Class
+import Fish_Class
 import Class
-
 from pico2d import *
 
 import game_framework
@@ -37,11 +41,11 @@ def enter():
 
     ui = Class.UI()
     bg = Class.BACKGROUND()
-    Objects = [Class.OBJECT() for i in range(10)]
-    ship = Class.SHIP()
-    fisher = Class.FISHER()
-    float = Class.FLOAT()
-    fish = Class.FISH()
+    Objects = [Object_Class.OBJECT() for i in range(10)]
+    ship = Ship_Class.SHIP()
+    fisher = Fisher_Class.FISHER()
+    float = Float_Class.FLOAT()
+    fish = Fish_Class.FISH()
 
     pass
 

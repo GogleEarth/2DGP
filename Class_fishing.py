@@ -1,8 +1,6 @@
-import game_framework
 import main_state
 
 from pico2d import *
-import Class
 
 white = None
 yellow = None
@@ -38,11 +36,11 @@ class Red_Line:
     def draw(self):
         self.image.clip_draw(0,0,64,64,self.x,self.y,32,32)
 
-    def update(self):
+    def update(self,fisher,fish):
         global key_down
-        self.y = max(main_state.fisher.fisher_y - 95, self.y - (main_state.fish.fish_level + main_state.fish.fish_level)*1.5)
+        self.y = max(fisher.fisher_y - 95, self.y - (fish.fish_level + fish.fish_level)*1.5)
         if key_down == True:
-            self.y = min(self.y + 5 + main_state.fisher.fisher_str, main_state.fisher.fisher_y + 95)
+            self.y = min(self.y + 5 + fisher.fisher_str, fisher.fisher_y + 95)
 def init():
     global white
     global yellow
@@ -91,7 +89,7 @@ def update(frame_time,fisher,fish,float):
     global yellow
     global fishing_state
 
-    red.update()
+    red.update(fisher,fish)
 
     if key_down == True:
         key_down = False
