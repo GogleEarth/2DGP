@@ -40,10 +40,10 @@ def enter():
     fisher = Fisher_Class.FISHER()
     float = Float_Class.FLOAT()
     fish = Fish_Class.FISH()
-
     bg.set_center_object(ship)
     ship.set_background(bg)
     fisher.set_background(bg)
+    fish.set_background(bg)
 
     pass
 

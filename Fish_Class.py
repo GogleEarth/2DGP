@@ -5,7 +5,7 @@ class FISH:
     image = None
     UN_DROW, DRAW = 0, 1
     def __init__(self):
-        self.fish_id = random.randint(0,3)
+        self.fish_id = random.randint(0,4)
         self.fish_level = random.randint(1,3)
         self.fish_size = random.randint(30,100)
         self.fish_heal = self.fish_size * 2
@@ -31,13 +31,16 @@ class FISH:
         pass
 
     def draw(self, fisher):
-        self.image.clip_draw(self.fish_id * 64,0,64,64,fisher.fisher_x,fisher.fisher_y + self.fish_y)
+        self.image.clip_draw(self.fish_id * 64,0,64,64,fisher.fisher_x - self.bg.window_left,fisher.fisher_y + self.fish_y - self.bg.window_bottom   )
         pass
 
     def reset(self):
-        self.fish_id = random.randint(0,3)
+        self.fish_id = random.randint(0,4)
         self.fish_level = random.randint(1, 3)
         self.fish_size = random.randint(30, 100)
-        self.fish_heal = self.fish_size * 5
+        self.fish_heal = self.fish_size * 2
         self.fish_state = self.UN_DROW
         self.fish_y = 20
+
+    def set_background(self, bg):
+        self.bg = bg
