@@ -30,11 +30,12 @@ class FixedTileBackground:
 
     def __init__(self):
         self.tile_map = load_tile_map('resource/Sea_tilemap.json')
-        self.max_id = self.tile_map.max_id
+        self.max_stone_id = self.tile_map.max_stone_id
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.w = self.tile_map.width * self.tile_map.tilewidth
         self.h = self.tile_map.height * self.tile_map.tileheight
+        print(self.w,self.h)
         self.bgm = load_music('resource/game_bgm.mp3')
         self.bgm.set_volume(64)
         self.bgm.repeat_play()

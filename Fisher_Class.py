@@ -15,7 +15,7 @@ class FISHER:
 
     def __init__(self):
         self.fisher_x = 0
-        self.fisher_y = 00
+        self.fisher_y = 0
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.fisher_frame = 0
@@ -54,8 +54,8 @@ class FISHER:
 
     def set_background(self, bg):
         self.bg = bg
-        self.x = self.bg.w / 2
-        self.y = self.bg.h / 2
+        self.fisher_x = self.bg.w / 2
+        self.fisher_y = self.bg.h / 2
 
     def handle_event(self,fisher, fish, ship, float, bg, event):
         if event.type == SDL_MOUSEMOTION:
