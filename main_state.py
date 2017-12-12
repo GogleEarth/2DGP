@@ -37,12 +37,11 @@ def enter():
     bg = Class.FixedTileBackground()
     Objects = [Object_Class.OBJECT(i) for i in range(bg.max_stone_id)]
     ship = Ship_Class.SHIP()
-    fisher = Fisher_Class.FISHER()
+    fisher = Fisher_Class.FISHER(bg)
     float = Float_Class.FLOAT()
     fish = Fish_Class.FISH()
     bg.set_center_object(ship)
     ship.set_background(bg)
-    fisher.set_background(bg)
     fish.set_background(bg)
 
     for Object in Objects:
