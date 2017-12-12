@@ -16,8 +16,7 @@ def enter():
     bgm.repeat_play()
 
 def exit():
-    global image, bgm
-    del(bgm)
+    global image
     del(image)
 
 
