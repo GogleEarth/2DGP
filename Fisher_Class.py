@@ -12,6 +12,7 @@ class FISHER:
     FRAMES_PER_ACTION = 4
 
     image = None
+    eat_sound = None
 
     def __init__(self,bg):
         self.canvas_width = get_canvas_width()
@@ -29,6 +30,10 @@ class FISHER:
         self.fisher_y = self.bg.h / 2
         if(FISHER.image == None):
             FISHER.image = load_image("resource/fisher.png")
+
+        if FISHER.eat_sound == None:
+            FISHER.eat_sound = load_wav('resource/eat_sound.wav')
+            FISHER.eat_sound.set_volume(32)
         pass
 
     def update(self, ship, frame_time):
@@ -53,6 +58,8 @@ class FISHER:
         self.image.clip_draw(self.fisher_frame * 64, self.dirrection * 64, 64, 64, self.fisher_x - self.bg.window_left, self.fisher_y - self.bg.window_bottom)
         pass
 
+    def eat_fish(self):
+        self.eat_sound.play()
 
     def handle_event(self,fisher, fish, ship, float, bg, event):
         if event.type == SDL_MOUSEMOTION:

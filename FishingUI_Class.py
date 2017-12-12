@@ -119,6 +119,7 @@ def update(frame_time,fisher,fish,float):
                 fisher.fisher_str += fish.fish_level
                 fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
                 fisher.fisher_hungry -= 5
+                fisher.eat_fish()
                 print("HEAL : ",fish.fish_heal)
             fisher.state = fisher.FINISH
             float.state = float.NONE
