@@ -31,7 +31,7 @@ class FISH:
         pass
 
     def draw(self, fisher):
-        self.image.clip_draw(self.fish_id * 64,0,64,64,fisher.fisher_x - self.bg.window_left,fisher.fisher_y + self.fish_y - self.bg.window_bottom   )
+        self.image.clip_draw(self.fish_id * 64,0,64,64,fisher.fisher_x - self.bg.window_left,fisher.fisher_y + self.fish_y - self.bg.window_bottom)
         pass
 
     def reset(self):

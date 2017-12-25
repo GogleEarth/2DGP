@@ -7,10 +7,12 @@ import Ship_Class
 import Object_Class
 import Fish_Class
 import Class
+import time
 from pico2d import *
 
 import game_framework
 import gameover_state
+import pause_state
 import FishingUI_Class
 
 ship = None
@@ -20,6 +22,8 @@ fish = None
 bg = None
 Objects = None
 ui = None
+game_time = None
+running_time = None
 
 name = "MainState"
 
@@ -31,7 +35,7 @@ def enter():
     global bg
     global Objects
     global ui
-
+    global game_time
 
     ui = Class.UI()
     bg = Class.FixedTileBackground()
@@ -46,6 +50,8 @@ def enter():
 
     for Object in Objects:
         Object.set_background(bg)
+
+    game_time = time.clock()
     pass
 
 def exit():
@@ -54,20 +60,20 @@ def exit():
 def pause():
     pass
 
-
 def resume():
     pass
-
 
 def handle_events(frame_time):
     global ship
     global fisher
     events = get_events()
     for event in events:
-        if event.type == SDL_QUIT:
+        if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+        elif event.type == SDL_KEYDOWN and event.key == SDL_QUIT:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
+            game_framework.push_state(pause_state)
         else:
             ship.handle_event(fisher, event)
             fisher.handle_event(fisher, fish, ship, float, bg, event)
@@ -82,6 +88,8 @@ def update(frame_time):
     global fish
     global Objects
     global ui
+    global game_time
+    global running_time
 
     handle_events(frame_time)
 
@@ -91,6 +99,8 @@ def update(frame_time):
     float.update(fisher, frame_time)
     ui.upadte(fisher)
     fish.update(fisher, float)
+
+    running_time = time.clock() - game_time
 
     if fisher.fisher_hunger <= 0:
         game_framework.change_state(gameover_state)
@@ -105,10 +115,11 @@ def draw(frame_time):
     global fish
     global Objects
     global ui
+    global running_time
 
     clear_canvas()
 
-    bg.draw()
+    bg.draw(running_time)
     ship.draw()
     fisher.draw()
     if float.state != float.NONE:
@@ -116,12 +127,13 @@ def draw(frame_time):
     for obj in Objects:
         obj.draw()
     ui.draw()
+
     if fisher.state == fisher.FIGHTING:
         FishingUI_Class.draw(fisher, fish)
     print(fish.fish_state)
     if(fish.fish_state == fish.DRAW):
         fish.draw(fisher)
-
+    FishingUI_Class.draw_sys(fisher,fish)
     delay(0.03)
     update_canvas()
 

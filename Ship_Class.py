@@ -9,7 +9,7 @@ class SHIP:
     SHIP_SPEED_PPS = (SHIP_SPEED_MPS * PIXEL_PER_METER) # 초속 1.851851...p/s
 
     LEFT_RUN, RIGHT_RUN, UP_RUN, DOWN_RUN, NONE_STATE = 1, 2, 3, 4, 0
-    ACCELATE, BREAK = 1, -1
+    ACCELATE, NONE, BREAK = 1, 0, -1
 
     image = None
 
@@ -25,7 +25,7 @@ class SHIP:
         self.direction_virtical = 0
         self.state_horizon = self.NONE_STATE
         self.state_virtical = self.NONE_STATE
-        self.state_accelate = self.BREAK
+        self.state_accelate = self.NONE
         if SHIP.image == None:
             SHIP.image = load_image("resource/ship.png")
 
@@ -59,6 +59,7 @@ class SHIP:
                 self.state_virtical = self.NONE_STATE
             elif self.state_horizon != self.NONE_STATE:
                 self.state_horizon = self.NONE_STATE
+            self.state_accelate = self.NONE
 
         print(self.ship_accelate)
 
@@ -82,19 +83,23 @@ class SHIP:
                 if event.key == SDLK_d:
                     self.state_horizon = self.RIGHT_RUN
                     self.state_virtical = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_a:
                     self.state_horizon = self.LEFT_RUN
                     self.state_virtical = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_w:
                     self.state_virtical = self.UP_RUN
                     self.state_horizon = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_s:
                     self.state_virtical = self.DOWN_RUN
                     self.state_horizon = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_SPACE:
                     self.state_accelate = self.BREAK
         if event.type == SDL_KEYUP:
@@ -102,19 +107,23 @@ class SHIP:
                 if event.key == SDLK_d:
                     self.state_horizon = self.RIGHT_RUN
                     self.state_virtical = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_a:
                     self.state_horizon = self.LEFT_RUN
                     self.state_virtical = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_w:
                     self.state_virtical = self.UP_RUN
                     self.state_horizon = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_s:
                     self.state_virtical = self.DOWN_RUN
                     self.state_horizon = self.NONE_STATE
-                    self.state_accelate = self.ACCELATE
+                    if self.state_accelate != self.BREAK:
+                        self.state_accelate = self.ACCELATE
                 elif event.key == SDLK_SPACE:
                     self.state_accelate = self.BREAK
 

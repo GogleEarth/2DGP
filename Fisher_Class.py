@@ -28,6 +28,7 @@ class FISHER:
         self.bg = bg
         self.fisher_x = self.bg.w / 2
         self.fisher_y = self.bg.h / 2
+        self.number_of_fishes = [{0:0},{1:0},{2:0},{3:0},{4:0}]
         if(FISHER.image == None):
             FISHER.image = load_image("resource/fisher.png")
 

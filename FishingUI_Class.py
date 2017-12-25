@@ -6,6 +6,8 @@ red = None
 key_down = False
 time_limit = 0
 fishing_state = True
+font = None
+fishing = None
 
 class White_Zone:
 
@@ -53,9 +55,15 @@ def init(fisher,fish,bg):
     global red
     global fishing_state
     global time_limit
+    global font
+    global fishing
 
+    fishing = None
     time_limit = 0
     fishing_state = True
+    if font == None:
+        font = load_font('resource/ENCR10B.TTF')
+
     if yellow == None:
         yellow = Yellow_Zone()
         yellow.set_background(bg)
@@ -101,6 +109,8 @@ def update(frame_time,fisher,fish,float):
     global time_limit
     global yellow
     global fishing_state
+    global font
+    global fishing
 
     red.update(fisher,fish)
 
@@ -118,19 +128,24 @@ def update(frame_time,fisher,fish,float):
             if fish.fish_id != 3:
                 fisher.fisher_str += fish.fish_level
                 fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
-                fisher.fisher_hungry -= 5
+                if(fisher.fisher_hungry > 5):
+                    fisher.fisher_hungry -= 5
                 fisher.eat_fish()
                 print("HEAL : ",fish.fish_heal)
+
+            fisher.number_of_fishes[fish.fish_id][fish.fish_id] += 1
             fisher.state = fisher.FINISH
             float.state = float.NONE
             fish.fish_state = fish.DRAW
+            fishing = True
+
         else:
             fisher.fisher_hunger -= fish.fish_level * 50
             fishing_state = False
             fisher.state = fisher.FINISH
             float.state = float.NONE
             fish.reset()
-
+            fishing = False
 
     pass
 
@@ -142,3 +157,14 @@ def draw(fisher, fish):
     white.draw(fisher, fish)
     yellow.draw(fisher, fish)
     red.draw()
+
+def draw_sys(fisher, fish):
+    global time_limit
+    global fishing
+
+    if time_limit >= 45:
+        if fishing:
+            font.draw(fisher.bg.canvas_width / 2 - 125, 35, '<sys>fishing succesee',(255, 255, 0))
+            font.draw(fisher.bg.canvas_width / 2 - 125, 15, '<sys>healing : %d' % fish.fish_heal , (255, 255, 0))
+        else:
+            font.draw(fisher.bg.canvas_width / 2-125, 25, '<sys>fishing fail',(255, 255, 0))

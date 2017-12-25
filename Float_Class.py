@@ -18,14 +18,17 @@ class FLOAT:
     def __init__(self):
         self.float_des_x = 0
         self.float_des_y = 0
+        self.float_x = 0
+        self.float_y = 0
         self.state = self.NONE
         self.float_frame = 0
         self.total_frames = 0.0
+        self.scale = 10
         if FLOAT.image == None:
             FLOAT.image = load_image("resource/float.png")
 
     def draw(self):
-        self.image.clip_draw(0, 0, 64, 64, self.float_des_x, self.float_des_y, 10, 10)
+        self.image.clip_draw(0, 0, 64, 64, self.float_x, self.float_y, self.scale, self.scale)
 
     def update(self, fisher, frame_time):
         pass

@@ -22,11 +22,13 @@ class UI:
             print("hungry : ", self.guage)
 
     def draw(self):
-        self.image.clip_draw(0,0,64,64,0,550,self.guage * 1.5,10)
+        self.image.clip_draw(0,0,64,64,0,500,self.guage * 1.5,10)
 
 
 
 class FixedTileBackground:
+    font = None
+    log_image = None
 
     def __init__(self):
         self.tile_map = load_tile_map('resource/Sea_tilemap.json')
@@ -39,15 +41,20 @@ class FixedTileBackground:
         self.bgm = load_music('resource/game_bgm.mp3')
         self.bgm.set_volume(64)
         self.bgm.repeat_play()
-
+        if FixedTileBackground.font == None:
+            FixedTileBackground.font = load_font('resource/ENCR10B.TTF')
+        if FixedTileBackground.log_image == None:
+            FixedTileBackground.log_image = load_image('resource/pause.png')
 
     def set_center_object(self, ship):
         self.center_object = ship
         self.max_window_left = self.w - self.canvas_width
         self.max_window_bottom = self.h - self.canvas_height
 
-    def draw(self):
+    def draw(self,time):
         self.tile_map.clip_draw_to_origin(self.window_left, self.window_bottom, self.canvas_width, self.canvas_height, 0, 0)
+        self.font.draw(self.canvas_width/2-125, self.canvas_height-50, 'Time Of Survival: %3.2f' % time, (255, 255, 255))
+        self.log_image.draw(self.canvas_width/2, 0, 450, 100)
         pass
 
     def update(self, frame_time):
