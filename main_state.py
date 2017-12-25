@@ -165,7 +165,7 @@ def draw(frame_time):
         fish.draw(fisher)
 
     FishingUI_Class.draw_sys(fisher,fish)
-
+ 
     delay(0.03)
     update_canvas()
 
