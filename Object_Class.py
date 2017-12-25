@@ -2,7 +2,7 @@ from pico2d import *
 import random
 from Tilemap import load_tile_map
 
-class OBJECT:
+class STONE:
     image = None
 
     def __init__(self,id):
@@ -11,8 +11,8 @@ class OBJECT:
         self.y = self.tile_map.object_stone[id]['y']
         self.width = self.tile_map.object_stone[id]['width']
         self.height = self.tile_map.object_stone[id]['height']
-        if OBJECT.image == None:
-            OBJECT.image = load_image('resource/Stone.png')
+        if STONE.image == None:
+            STONE.image = load_image('resource/Stone.png')
         pass
 
     def draw(self):
@@ -22,3 +22,37 @@ class OBJECT:
     def set_background(self, bg):
         self.bg = bg
         self.y = bg.h - self.y
+
+    def get_bb(self):
+        return self.x - self.width / 2 - self.bg.window_left, self.y - self.height / 2 - self.bg.window_bottom, self.x + self.width / 2 - self.bg.window_left, self.y + self.height / 2 - self.bg.window_bottom
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+
+class VORTEX:
+    image = None
+
+    def __init__(self,id):
+        self.tile_map = load_tile_map('resource/Sea_tilemap.json')
+        self.x = self.tile_map.object_vortex[id]['x']
+        self.y = self.tile_map.object_vortex[id]['y']
+        self.width = self.tile_map.object_vortex[id]['width']
+        self.height = self.tile_map.object_vortex[id]['height']
+        if VORTEX.image == None:
+            VORTEX.image = load_image('resource/Vortex.png')
+        pass
+
+    def draw(self):
+        self.image.draw(self.x - self.bg.window_left, self.y - self.bg.window_bottom, self.width, self.height)
+        pass
+
+    def set_background(self, bg):
+        self.bg = bg
+        self.y = bg.h - self.y
+
+    def get_bb(self):
+        return self.x - self.width / 2 - self.bg.window_left, self.y - self.height / 2 - self.bg.window_bottom, self.x + self.width / 2 - self.bg.window_left, self.y + self.height / 2 - self.bg.window_bottom
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())

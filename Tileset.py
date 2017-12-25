@@ -16,8 +16,7 @@ class TileSet:
         print(self.__dict__)
         self.base_image = load_image(self.image)
         self.tile_images = []
-        image = self.base_image.clip_image(0, 0,
-                                               self.tilewidth, self.tileheight)
+        image = self.base_image.clip_image(0, 0, self.tilewidth, self.tileheight)
         self.tile_images.append(image)
         pass
 

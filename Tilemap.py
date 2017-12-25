@@ -20,11 +20,13 @@ class TileMap:
         self.firstgid = self.tilesets[0]['firstgid']
         self.data = self.layers[0]['data']
         self.object_stone = self.layers[1]['objects']
-        self.object_vortex = self.layers[2]['objects']
+        self.Local = self.layers[2]['objects']
+        self.object_vortex = self.layers[3]['objects']
         self.max_stone_id = 58
+        self.max_vortex_id = 73
+        self.Local = 78
 
-        print(self.object_stone)
-        print(self.max_stone_id)
+        print(self.Local)
 
         new_data = []
         for row in reversed(range(self.height)):

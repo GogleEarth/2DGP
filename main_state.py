@@ -39,7 +39,9 @@ def enter():
 
     ui = Class.UI()
     bg = Class.FixedTileBackground()
-    Objects = [Object_Class.OBJECT(i) for i in range(bg.max_stone_id)]
+    Objects = [Object_Class.STONE(i) for i in range(bg.max_stone_id)]
+    Voretx = [Object_Class.VORTEX(i) for i in range(0, bg.max_vortex_id-bg.max_stone_id)]
+    Objects = Objects + Voretx
     ship = Ship_Class.SHIP()
     fisher = Fisher_Class.FISHER(bg)
     float = Float_Class.FLOAT(fisher)
@@ -99,7 +101,7 @@ def update(frame_time):
     ship.update(frame_time)
     fisher.update(ship, frame_time)
     float.update(fisher, frame_time)
-    ui.upadte(fisher)
+    ui.upadte(fisher, frame_time)
     fish.update(fisher, float)
 
     running_time = time.clock() - game_time
@@ -109,6 +111,23 @@ def update(frame_time):
     if fisher.state == fisher.FIGHTING:
         FishingUI_Class.update(frame_time, fisher, fish, float)
         pass
+
+    for obj in Objects:
+        if ship.ship_x - obj.x > -100 and ship.ship_x - obj.x < 100:
+            if ship.ship_y - obj.y > -100 and ship.ship_y - obj.y < 100:
+                if collide(ship, obj):
+                    fisher.fisher_hunger -= ship.ship_accelate
+                    ship.state_accelate = ship.NONE
+                    ship.ship_accelate = 0
+                    if obj.x >= ship.ship_x:
+                        ship.ship_x -= 20
+                    elif obj.x <= ship.ship_x:
+                        ship.ship_x += 20
+                    if obj.y >= ship.ship_y:
+                        ship.ship_y -= 20
+                    elif obj.y <= ship.ship_y:
+                        ship.ship_y += 20
+
 
 def draw(frame_time):
     global ship
@@ -121,16 +140,21 @@ def draw(frame_time):
 
     clear_canvas()
 
-    bg.draw(running_time)
+    bg.draw()
+
+    for obj in Objects:
+        obj.draw()
+        obj.draw_bb()
+
+    bg.draw_bg_ui(running_time)
 
     ship.draw()
+    ship.draw_bb()
+
     fisher.draw()
 
     if float.state != float.NONE:
         float.draw()
-
-    for obj in Objects:
-        obj.draw()
 
     ui.draw()
 
@@ -145,3 +169,21 @@ def draw(frame_time):
     delay(0.03)
     update_canvas()
 
+def collide(a, b):
+    left_a, bottom_a, right_a, top_a = a.get_bb()
+    left_b, bottom_b, right_b, top_b = b.get_bb()
+
+    if left_a > right_b:
+        return False
+
+    if right_a < left_b:
+        return False
+
+    if top_a < bottom_b:
+        return False
+
+    if bottom_a > top_b:
+        return  False
+
+    return True
+    pass

@@ -33,9 +33,6 @@ class FLOAT:
         self.image.clip_draw(0, 0, 64, 64, self.float_x - self.bg.window_left, self.float_y - self.bg.window_bottom, self.scale, self.scale)
 
     def update(self, fisher, frame_time):
-        print("float_pos : ", self.float_x, ' ', self.float_y)
-        print("float_des_pos : ", self.float_des_x, ' ', self.float_des_y)
-        print("float_org_pos : ", self.float_x_org, ' ', self.float_y_org)
 
         if self.state == self.NONE:
             self.float_x = fisher.fisher_x

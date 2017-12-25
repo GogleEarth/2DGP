@@ -23,6 +23,7 @@ def exit():
     del(font)
 
 def update(frame_time):
+    main_state.ui.upadte(main_state.fisher,frame_time)
     pass
 
 def draw(frame_time):

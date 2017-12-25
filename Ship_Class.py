@@ -75,6 +75,13 @@ class SHIP:
         self.ship_x = self.bg.w / 2
         self.ship_y = self.bg.h / 2
 
+    def get_bb(self):
+        return self.ship_x - 32 - self.bg.window_left, self.ship_y - 32 - self.bg.window_bottom,\
+               self.ship_x + 32 - self.bg.window_left, self.ship_y + 32 - self.bg.window_bottom
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
     def handle_event(self, fisher, event):
         if event.type == SDL_KEYDOWN:
             if fisher.state == fisher.STANDING:
