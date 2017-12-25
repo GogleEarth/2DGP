@@ -42,11 +42,12 @@ def enter():
     Objects = [Object_Class.OBJECT(i) for i in range(bg.max_stone_id)]
     ship = Ship_Class.SHIP()
     fisher = Fisher_Class.FISHER(bg)
-    float = Float_Class.FLOAT()
+    float = Float_Class.FLOAT(fisher)
     fish = Fish_Class.FISH()
     bg.set_center_object(ship)
     ship.set_background(bg)
     fish.set_background(bg)
+    float.set_background(bg)
 
     for Object in Objects:
         Object.set_background(bg)
@@ -66,11 +67,12 @@ def resume():
 def handle_events(frame_time):
     global ship
     global fisher
+
     events = get_events()
     for event in events:
         if event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
-        elif event.type == SDL_KEYDOWN and event.key == SDL_QUIT:
+        elif event.type == SDL_QUIT:
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_p:
             game_framework.push_state(pause_state)
@@ -120,20 +122,26 @@ def draw(frame_time):
     clear_canvas()
 
     bg.draw(running_time)
+
     ship.draw()
     fisher.draw()
+
     if float.state != float.NONE:
         float.draw()
+
     for obj in Objects:
         obj.draw()
+
     ui.draw()
 
     if fisher.state == fisher.FIGHTING:
         FishingUI_Class.draw(fisher, fish)
-    print(fish.fish_state)
+
     if(fish.fish_state == fish.DRAW):
         fish.draw(fisher)
+
     FishingUI_Class.draw_sys(fisher,fish)
+
     delay(0.03)
     update_canvas()
 

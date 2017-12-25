@@ -54,7 +54,6 @@ class FISHER:
             self.total_frames += FISHER.FRAMES_PER_ACTION * FISHER.ACTION_PER_TIME * frame_time
             self.fisher_frame = random.randint(1, int(self.total_frames) % 4+1)
 
-
     def draw(self):
         self.image.clip_draw(self.fisher_frame * 64, self.dirrection * 64, 64, 64, self.fisher_x - self.bg.window_left, self.fisher_y - self.bg.window_bottom)
         pass
@@ -65,26 +64,33 @@ class FISHER:
     def handle_event(self,fisher, fish, ship, float, bg, event):
         if event.type == SDL_MOUSEMOTION:
             print("Mouse position : ", fisher.fisher_x + event.x - 400, "  ", fisher.fisher_y + 600 - event.y - 300)
-            if self.state == self.STANDING:
+            if self.state == self.STANDING and float.state == float.NONE:
                 if fisher.fisher_x + event.x - 400 >= self.fisher_x:
                     if fisher.fisher_y + 600 - event.y - 300 > self.fisher_y:
                         self.dirrection = self.LEFT_DOWN
-                        float.float_des_x = event.x
-                        float.float_des_y = 600 - event.y
+                        float.float_x = fisher.fisher_x
+                        float.float_y = fisher.fisher_y
+                        float.float_des_x = fisher.fisher_x + event.x - 400
+                        float.float_des_y = fisher.fisher_y + 600 - event.y - 330
                     else:
                         self.dirrection = self.LEFT_UP
-                        float.float_des_x = event.x
-                        float.float_des_y = 600 - event.y
+                        float.float_x = fisher.fisher_x
+                        float.float_y = fisher.fisher_y
+                        float.float_des_x = fisher.fisher_x + event.x - 400
+                        float.float_des_y = fisher.fisher_y + 600 - event.y - 330
                 else:
                     if fisher.fisher_y + 600 - event.y - 300 > self.fisher_y:
                         self.dirrection = self.RIGHT_DOWN
-                        float.float_des_x = event.x
-                        float.float_des_y = 600 - event.y
+                        float.float_x = fisher.fisher_x
+                        float.float_y = fisher.fisher_y
+                        float.float_des_x = fisher.fisher_x + event.x - 400
+                        float.float_des_y = fisher.fisher_y + 600 - event.y - 330
                     else:
                         self.dirrection = self.RIGHT_UP
-                        float.float_des_x = event.x
-                        float.float_des_y = 600 - event.y
-                print("dirrection : ", self.dirrection)
+                        float.float_x = fisher.fisher_x
+                        float.float_y = fisher.fisher_y
+                        float.float_des_x = fisher.fisher_x + event.x - 400
+                        float.float_des_y = fisher.fisher_y + 600 - event.y - 330
 
         elif event.type == SDL_MOUSEBUTTONDOWN:
             if ship.state_horizon == ship.NONE_STATE and ship.state_virtical == ship.NONE_STATE:
@@ -94,9 +100,7 @@ class FISHER:
                     FishingUI_Class.init(fisher, fish,bg)
                 if self.state == self.FISHING:
                     self.state = self.FINISH
-                    float.float_y = self.fisher_y
-                    float.float_x = self.fisher_x
-                    float.state = float.NONE
+                    float.state = float.FINISH
                     FishingUI_Class.init(fisher, fish,bg)
 
                 pass

@@ -61,8 +61,6 @@ class SHIP:
                 self.state_horizon = self.NONE_STATE
             self.state_accelate = self.NONE
 
-        print(self.ship_accelate)
-
     def draw(self):
         if self.state_virtical != self.NONE_STATE:
             self.image.clip_draw(0, (self.state_virtical - 1) * 64, 64, 64, self.ship_x - self.bg.window_left, self.ship_y - self.bg.window_bottom)
@@ -127,4 +125,3 @@ class SHIP:
                 elif event.key == SDLK_SPACE:
                     self.state_accelate = self.BREAK
 
-        print(self.ship_x, " " , self.ship_y)

@@ -8,6 +8,7 @@ time_limit = 0
 fishing_state = True
 font = None
 fishing = None
+trash = None
 
 class White_Zone:
 
@@ -57,8 +58,10 @@ def init(fisher,fish,bg):
     global time_limit
     global font
     global fishing
+    global trash
 
     fishing = None
+    trash = None
     time_limit = 0
     fishing_state = True
     if font == None:
@@ -111,6 +114,7 @@ def update(frame_time,fisher,fish,float):
     global fishing_state
     global font
     global fishing
+    global trash
 
     red.update(fisher,fish)
 
@@ -120,22 +124,21 @@ def update(frame_time,fisher,fish,float):
     if fishing_state:
         time_limit += 1 / (frame_time * 60)
         print("Time_limit : ", 60 - time_limit)
-        print("red y : ", red.y, " yellow y- :", fisher.fisher_y - 16 * (4-fish.fish_level), " yellow y+ : ", fisher.fisher_y + 16 * (4-fish.fish_level))
     if time_limit >= 45:
         if red.y >= fisher.fisher_y - 16 * (4-fish.fish_level) and red.y <= fisher.fisher_y + 16 * (4-fish.fish_level):
-            print("fishing success")
             fishing_state = False
             if fish.fish_id != 3:
+                trash = False
                 fisher.fisher_str += fish.fish_level
                 fisher.fisher_hunger = min(fisher.fisher_hunger + fish.fish_heal, 1000)
                 if(fisher.fisher_hungry > 5):
                     fisher.fisher_hungry -= 5
                 fisher.eat_fish()
-                print("HEAL : ",fish.fish_heal)
-
+            else:
+                trash = True
             fisher.number_of_fishes[fish.fish_id][fish.fish_id] += 1
             fisher.state = fisher.FINISH
-            float.state = float.NONE
+            float.state = float.FINISH
             fish.fish_state = fish.DRAW
             fishing = True
 
@@ -153,7 +156,10 @@ def draw(fisher, fish):
     global white
     global yellow
     global red
+    global font
+    global time_limit
 
+    font.draw(fisher.bg.canvas_width / 2 - 125, 25, 'time_limit : %3.2f' % (45-time_limit), (255, 255, 0))
     white.draw(fisher, fish)
     yellow.draw(fisher, fish)
     red.draw()
@@ -161,10 +167,13 @@ def draw(fisher, fish):
 def draw_sys(fisher, fish):
     global time_limit
     global fishing
+    global trash
+    global font
 
     if time_limit >= 45:
         if fishing:
             font.draw(fisher.bg.canvas_width / 2 - 125, 35, '<sys>fishing succesee',(255, 255, 0))
-            font.draw(fisher.bg.canvas_width / 2 - 125, 15, '<sys>healing : %d' % fish.fish_heal , (255, 255, 0))
+            if not trash:
+                font.draw(fisher.bg.canvas_width / 2 - 125, 15, '<sys>healing : %d' % fish.fish_heal , (255, 255, 0))
         else:
             font.draw(fisher.bg.canvas_width / 2-125, 25, '<sys>fishing fail',(255, 255, 0))

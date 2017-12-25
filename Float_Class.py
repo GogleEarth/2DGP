@@ -3,7 +3,7 @@ import random
 
 class FLOAT:
     image = None
-    NONE, STANDING, READY, FISING, FINISH = 0, 1, 2, 3, 4
+    NONE, STANDING, READY, FISING, FIGHTING, FINISH = 0, 1, 2, 3, 4, 5
 
     PIXEL_PER_METER = (10.0 / 30)  # 10픽셀당 30cm
     FLOAT_SPEED_KMPH = 100.0  # 시속 100km/h
@@ -15,21 +15,60 @@ class FLOAT:
     ACTION_PER_TIME = 1.0 / TIME_PER_ACTION
     FRAMES_PER_ACTION = 4
 
-    def __init__(self):
+    def __init__(self,fisher):
         self.float_des_x = 0
         self.float_des_y = 0
-        self.float_x = 0
-        self.float_y = 0
+        self.float_x_org = fisher.fisher_x
+        self.float_y_org = fisher.fisher_y
+        self.float_x = fisher.fisher_x
+        self.float_y = fisher.fisher_y
         self.state = self.NONE
         self.float_frame = 0
         self.total_frames = 0.0
-        self.scale = 10
+        self.scale = 20
         if FLOAT.image == None:
             FLOAT.image = load_image("resource/float.png")
 
     def draw(self):
-        self.image.clip_draw(0, 0, 64, 64, self.float_x, self.float_y, self.scale, self.scale)
+        self.image.clip_draw(0, 0, 64, 64, self.float_x - self.bg.window_left, self.float_y - self.bg.window_bottom, self.scale, self.scale)
 
     def update(self, fisher, frame_time):
-        pass
-    pass
+        print("float_pos : ", self.float_x, ' ', self.float_y)
+        print("float_des_pos : ", self.float_des_x, ' ', self.float_des_y)
+        print("float_org_pos : ", self.float_x_org, ' ', self.float_y_org)
+
+        if self.state == self.NONE:
+            self.float_x = fisher.fisher_x
+            self.float_y = fisher.fisher_y
+            self.float_x_org = fisher.fisher_x
+            self.float_y_org = fisher.fisher_y
+
+        if self.state == self.READY:
+            self.state = self.READY
+            if self.float_x_org >= self.float_des_x:
+                self.float_x -= (self.float_x - self.float_des_x) / self.FLOAT_SPEED_PPS
+            else:
+                self.float_x += (self.float_des_x - self.float_x) / self.FLOAT_SPEED_PPS
+            if self.float_y_org >= self.float_des_y:
+                self.float_y -= (self.float_y - self.float_des_y) / self.FLOAT_SPEED_PPS
+            else:
+                self.float_y += (self.float_des_y - self.float_y) / self.FLOAT_SPEED_PPS
+            if self.float_x >= self.float_des_x - 1 and self.float_x < self.float_des_x + 1:
+                self.state = self.FISING
+
+
+        if self.state == self.FINISH:
+            self.state = self.FINISH
+            if self.float_x_org >= self.float_x:
+                self.float_x += (self.float_x_org - self.float_x) / self.FLOAT_SPEED_PPS
+            else:
+                self.float_x -= (self.float_x - self.float_x_org) / self.FLOAT_SPEED_PPS
+            if self.float_y_org >= self.float_y:
+                self.float_y += (self.float_y_org - self.float_y) / self.FLOAT_SPEED_PPS
+            else:
+                self.float_y -= (self.float_y - self.float_y_org) / self.FLOAT_SPEED_PPS
+            if self.float_x >= self.float_x_org - 1 and self.float_x < self.float_x_org + 1:
+                self.state = self.NONE
+
+    def set_background(self, bg):
+        self.bg = bg
