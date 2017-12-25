@@ -15,12 +15,10 @@ class UI:
 
     def upadte(self, fisher, frametime):
         self.frame = (frametime + self.frame) % 3
-        print("frame : ",self.frame)
         if self.frame >= 2.5 and self.guage >= 0:
             fisher.fisher_hunger -= fisher.fisher_hungry
             fisher.fisher_hungry += 2
             self.guage = fisher.fisher_hunger
-            print("hungry : ", self.guage)
             self.frame = 0
 
     def draw(self):
@@ -36,6 +34,7 @@ class FixedTileBackground:
         self.tile_map = load_tile_map('resource/Sea_tilemap.json')
         self.max_stone_id = self.tile_map.max_stone_id
         self.max_vortex_id = self.tile_map.max_vortex_id
+        self.local = self.tile_map.Local
         self.canvas_width = get_canvas_width()
         self.canvas_height = get_canvas_height()
         self.w = self.tile_map.width * self.tile_map.tilewidth

@@ -69,3 +69,6 @@ class FLOAT:
 
     def set_background(self, bg):
         self.bg = bg
+
+    def get_bb(self):
+        return self.float_x - self.scale / 2 - self.bg.window_left, self.float_x - self.scale / 2 - self.bg.window_bottom, self.float_x + self.scale / 2 - self.bg.window_left, self.float_y + self.scale / 2 - self.bg.window_bottom

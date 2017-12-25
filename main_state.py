@@ -24,6 +24,7 @@ Objects = None
 ui = None
 game_time = None
 running_time = None
+Locals = None
 
 name = "MainState"
 
@@ -36,9 +37,11 @@ def enter():
     global Objects
     global ui
     global game_time
+    global Locals
 
     ui = Class.UI()
     bg = Class.FixedTileBackground()
+    Locals = [Object_Class.LOCAL(i) for i in range(bg.local-bg.max_vortex_id)]
     Objects = [Object_Class.STONE(i) for i in range(bg.max_stone_id)]
     Voretx = [Object_Class.VORTEX(i) for i in range(0, bg.max_vortex_id-bg.max_stone_id)]
     Objects = Objects + Voretx
@@ -53,6 +56,10 @@ def enter():
 
     for Object in Objects:
         Object.set_background(bg)
+
+    for local in Locals:
+        local.set_background(bg)
+
 
     game_time = time.clock()
     pass
@@ -94,6 +101,7 @@ def update(frame_time):
     global ui
     global game_time
     global running_time
+    global Locals
 
     handle_events(frame_time)
 
@@ -128,6 +136,15 @@ def update(frame_time):
                     elif obj.y <= ship.ship_y:
                         ship.ship_y += 20
 
+    for loc in Locals:
+        if collide(float,loc):
+            fish.weight = loc.weight
+
+    if fisher.fishing > 5:
+        fisher.fishing = 0
+        for loc in Locals:
+            loc.weight = random.randint(0,20)
+
 
 def draw(frame_time):
     global ship
@@ -137,6 +154,7 @@ def draw(frame_time):
     global Objects
     global ui
     global running_time
+    global Locals
 
     clear_canvas()
 
@@ -144,12 +162,15 @@ def draw(frame_time):
 
     for obj in Objects:
         obj.draw()
-        obj.draw_bb()
+        #obj.draw_bb()
+
+    #for local in Locals:
+    #    local.draw_bb()
 
     bg.draw_bg_ui(running_time)
 
     ship.draw()
-    ship.draw_bb()
+    #ship.draw_bb()
 
     fisher.draw()
 
@@ -165,7 +186,7 @@ def draw(frame_time):
         fish.draw(fisher)
 
     FishingUI_Class.draw_sys(fisher,fish)
- 
+
     delay(0.03)
     update_canvas()
 

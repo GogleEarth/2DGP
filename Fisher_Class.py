@@ -29,6 +29,7 @@ class FISHER:
         self.fisher_x = self.bg.w / 2
         self.fisher_y = self.bg.h / 2
         self.number_of_fishes = [{0:0},{1:0},{2:0},{3:0},{4:0}]
+        self.fishing = 0
         if(FISHER.image == None):
             FISHER.image = load_image("resource/fisher.png")
 
@@ -63,7 +64,6 @@ class FISHER:
 
     def handle_event(self,fisher, fish, ship, float, bg, event):
         if event.type == SDL_MOUSEMOTION:
-            print("Mouse position : ", fisher.fisher_x + event.x - 400, "  ", fisher.fisher_y + 600 - event.y - 300)
             if self.state == self.STANDING and float.state == float.NONE:
                 if fisher.fisher_x + event.x - 400 >= self.fisher_x:
                     if fisher.fisher_y + 600 - event.y - 300 > self.fisher_y:

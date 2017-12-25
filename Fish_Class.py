@@ -11,13 +11,14 @@ class FISH:
         self.fish_heal = self.fish_size * 2
         self.fish_state = self.UN_DROW
         self.fish_y = 20
+        self.weight = 0
         if(FISH.image == None):
             FISH.image = load_image("resource/fishes.png")
 
     def update(self, fisher, float):
         if float.state == float.FISING:
             i = random.randint(0,100)
-            if i == 4 - self.fish_level:
+            if i <= 4 - self.fish_level + fisher.fisher_luck + self.weight:
                 float.state = float.FIGHTING
                 fisher.state = fisher.FIGHTING
                 self.reset()

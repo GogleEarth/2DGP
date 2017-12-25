@@ -21,7 +21,6 @@ class STONE:
 
     def set_background(self, bg):
         self.bg = bg
-        self.y = bg.h - self.y
 
     def get_bb(self):
         return self.x - self.width / 2 - self.bg.window_left, self.y - self.height / 2 - self.bg.window_bottom, self.x + self.width / 2 - self.bg.window_left, self.y + self.height / 2 - self.bg.window_bottom
@@ -49,7 +48,29 @@ class VORTEX:
 
     def set_background(self, bg):
         self.bg = bg
-        self.y = bg.h - self.y
+
+    def get_bb(self):
+        return self.x - self.width / 2 - self.bg.window_left, self.y - self.height / 2 - self.bg.window_bottom, self.x + self.width / 2 - self.bg.window_left, self.y + self.height / 2 - self.bg.window_bottom
+
+    def draw_bb(self):
+        draw_rectangle(*self.get_bb())
+
+class LOCAL:
+
+    def __init__(self,id):
+        self.tile_map = load_tile_map('resource/Sea_tilemap.json')
+        self.x = self.tile_map.object_loacl[id]['x']
+        self.y = self.tile_map.object_loacl[id]['y']
+        self.width = self.tile_map.object_loacl[id]['width']
+        self.height = self.tile_map.object_loacl[id]['height']
+        self.weight = random.randint(0,20)
+        pass
+
+    def draw(self):
+        pass
+
+    def set_background(self, bg):
+        self.bg = bg
 
     def get_bb(self):
         return self.x - self.width / 2 - self.bg.window_left, self.y - self.height / 2 - self.bg.window_bottom, self.x + self.width / 2 - self.bg.window_left, self.y + self.height / 2 - self.bg.window_bottom

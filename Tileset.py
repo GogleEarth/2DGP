@@ -13,7 +13,6 @@ class TileSet:
         data = json.load(f)
         f.close()
         self.__dict__.update(data)
-        print(self.__dict__)
         self.base_image = load_image(self.image)
         self.tile_images = []
         image = self.base_image.clip_image(0, 0, self.tilewidth, self.tileheight)

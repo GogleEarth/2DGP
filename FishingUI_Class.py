@@ -141,7 +141,7 @@ def update(frame_time,fisher,fish,float):
             float.state = float.FINISH
             fish.fish_state = fish.DRAW
             fishing = True
-
+            fisher.fishing += 1
         else:
             fisher.fisher_hunger -= fish.fish_level * 50
             fishing_state = False
