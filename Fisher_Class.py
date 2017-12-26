@@ -21,7 +21,7 @@ class FISHER:
         self.total_frames = 0.0
         self.fisher_hunger = 1000
         self.fisher_hungry = 10
-        self.fisher_luck = random.randint(0, 20)
+        self.fisher_luck = random.randint(-10, 10)
         self.fisher_str = random.randint(10, 20)
         self.state = self.STANDING
         self.dirrection = self.RIGHT_DOWN

@@ -63,7 +63,7 @@ class LOCAL:
         self.y = self.tile_map.object_loacl[id]['y']
         self.width = self.tile_map.object_loacl[id]['width']
         self.height = self.tile_map.object_loacl[id]['height']
-        self.weight = random.randint(0,20)
+        self.weight = random.randint(-40,40)
         pass
 
     def draw(self):

@@ -141,7 +141,7 @@ def update(frame_time):
     if fisher.fishing > 5:
         fisher.fishing = 0
         for loc in Locals:
-            loc.weight = random.randint(0,20)
+            loc.weight = random.randint(-40,40)
 
 
 def draw(frame_time):
