@@ -1,5 +1,6 @@
 import game_framework
 import main_state
+import manual_state
 
 from pico2d import *
 
@@ -16,8 +17,9 @@ def enter():
     bgm.repeat_play()
 
 def exit():
-    global image
+    global image, bgm
     del(image)
+    del(bgm)
 
 
 def handle_events(frame_time):
@@ -27,6 +29,8 @@ def handle_events(frame_time):
             game_framework.quit()
         elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
             game_framework.quit()
+        elif event.type == SDL_KEYDOWN and event.key == SDLK_F1:
+            game_framework.change_state(manual_state)
         else:
             if (event.type, event.key) == (SDL_KEYDOWN, SDLK_SPACE):
                 game_framework.change_state(main_state)
